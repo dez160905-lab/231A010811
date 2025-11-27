@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Trang Chủ - Phạm Huỳnh Minh Trọng</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap');
+        body { font-family: 'Inter', sans-serif; background-color: #f3f4f6; }
+        .container { max-width: 800px; }
+    </style>
+</head>
+<body class="p-4 sm:p-8">
+
+    <div class="container mx-auto bg-white shadow-xl rounded-2xl p-6 md:p-10">
+        <nav class="flex justify-center space-x-4 mb-8 p-4 bg-indigo-600 rounded-xl shadow-md">
+            <a href="index.html" class="text-white font-bold px-4 py-2 rounded-lg bg-indigo-700 hover:bg-indigo-800 transition duration-300">Trang Chủ</a>
+            <a href="about.html" class="text-white px-4 py-2 rounded-lg hover:bg-indigo-700 transition duration-300">Về Tôi</a>
+            <a href="contact.html" class="text-white px-4 py-2 rounded-lg hover:bg-indigo-700 transition duration-300">Liên Hệ</a>
+        </nav>
+
+        <div class="text-center py-10">
+            <div class="relative w-32 h-32 mx-auto mb-6">
+                <img id="avatarImage" src="images/06.jpg" alt="Ảnh đại diện" class="w-full h-full rounded-full border-4 border-indigo-500 shadow-lg object-cover">
+                
+                <button id="uploadButton" class="absolute bottom-0 right-0 bg-indigo-500 text-white p-2 rounded-full border-2 border-white hover:bg-indigo-600 transition duration-150" title="Tải ảnh đại diện lên">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12"></path></svg>
+                </button>
+                
+                <input type="file" id="avatarUpload" accept="image/*" class="hidden">
+            </div>
+
+            <h1 class="text-4xl font-extrabold text-gray-800 mb-2">Phạm Huỳnh Minh Trọng</h1>
+            <p class="text-xl text-indigo-600 font-medium mb-4">Chào mừng đến với trang cá nhân của tôi!</p>
+            
+            <div class="mt-8">
+                <p class="text-gray-600 leading-relaxed max-w-lg mx-auto">
+                    Tôi là một người đam mê công nghệ và lập trình. Bạn có thể tìm thấy thông tin chi tiết về bản thân tôi tại trang "Về Tôi" và các phương thức liên lạc tại trang "Liên Hệ".
+                </p>
+            </div>
+        </div>
+
+    </div>
+
+    <script>
+        const avatarImage = document.getElementById('avatarImage');
+        const avatarUpload = document.getElementById('avatarUpload');
+        const uploadButton = document.getElementById('uploadButton');
+        const localStorageKey = 'userAvatar';
+        const defaultAvatarSrc = "images/06.jpg";
+
+        function loadAvatar() {
+            const storedAvatar = localStorage.getItem(localStorageKey);
+            if (storedAvatar) {
+                avatarImage.src = storedAvatar;
+            } else {
+                avatarImage.src = defaultAvatarSrc;
+            }
+        }
+
+        function handleAvatarUpload(event) {
+            const file = event.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = (e) => {
+                    const dataURL = e.target.result;
+                    avatarImage.src = dataURL;
+                    localStorage.setItem(localStorageKey, dataURL);
+                };
+                reader.readAsDataURL(file);
+            }
+        }
+
+        uploadButton.addEventListener('click', () => {
+            avatarUpload.click();
+        });
+
+        avatarUpload.addEventListener('change', handleAvatarUpload);
+
+        document.addEventListener('DOMContentLoaded', loadAvatar);
+    </script>
+</body>
+</html>
